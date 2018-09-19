@@ -6,7 +6,7 @@ exports.noArguments = function (args) {
 }
 
 exports.oneArgument = function (args) {
-    return (args.length === 1) ? true: false;
+    return (args.length === 1);
 }
 
 exports.argumentsMoreThan = function (args, nbr) {
