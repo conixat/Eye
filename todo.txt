@@ -1,0 +1,66 @@
+to-dos
+
+LATER
+
+forum new tournament notice
+farm index (curve)
+
+
+
+IMMEDIATE
+
+alert the following:
+can't play specific mods
+can play unusual mods
+
+use more than one embed for more info
+
+
+user-specific variables for commands
+
+basic arithmetics
+
+
+output as a separate function
+reply(text)
+
+
+custom command
+
+new commands
+
+.c help
+.c list
+
+.c playcount
+.c pc
+
+.c playtime
+.c pt
+
+.c score
+.c s
+	total //.c score total ==== .c score
+	t
+	
+	ranked
+	r
+
+bot check & bot_command check
+extract command and arguments
+check if command is provided
+
+switch(command)
+
+fetch json's (get and save in folder "osuinfo")
+await fetches
+
+construct reply
+reply
+
+
+
+
+
+a38cbd899a1d47d1c187c7af280b9c2de96f69fa
+https://osu.ppy.sh/api/get_beatmaps?k=a38cbd899a1d47d1c187c7af280b9c2de96f69fa&u=Coni&mode=0&type=string&b=787430
