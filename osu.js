@@ -12,7 +12,7 @@ exports.accuracy = function (n_300,n_100,n_50,n_0) {
 
 exports.modsString = function (mods_value, full = false) {
     if (mods_value == 0x00000000) {
-        return 'NM';
+        return full? 'NodMod': 'NM';
     }
     let resultedString = (
         ((mods_value & 0x00001000) ? (full? 'SpunOut,':        'SO'): '') +
