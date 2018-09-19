@@ -17,5 +17,7 @@ exports.commandlist = function (message) {
         \n\
         **help** (h; list, l; commands, c) - Lists commands\n\
         **totalpp** (t) - Shows total pp\n\
-        **mods** (m) - Shows top pp scores for each mod');
+        **mods** (m) - Shows top pp scores for each mod\n\
+        **team** - team commands\n\
+        \ttest');
 }

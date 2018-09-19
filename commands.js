@@ -30,6 +30,46 @@ async function totalpp (message, username) {
 
 exports.totalpp = totalpp;
 
+async function teamAveragepp (message, teamname, team) { //team average pp
+    console.log('\n'+teamname);
+    console.log(team);
+    var getUserPromises = [];
+    var membersLength = team.members.length;
+    for (let i = 0; i < membersLength; i++) {
+        getUserPromises[i] = osu.getUser(team.members[i], 1);
+    }
+    Promise.all(getUserPromises).then(
+        (users) => {
+            var teamTotalpp = Number(users[0].pp_raw);
+            for (let i = 1; i < team.members.length; i++) {
+                teamTotalpp += Number(users[i].pp_raw);
+                console.log(users[i].pp_raw);
+                console.log(teamTotalpp);
+            }
+            var averagepp = Math.round(teamTotalpp / membersLength);
+            console.log(averagepp);
+            post.normalMessage(message, 'Team' + teamname + '\'s average pp', averagepp);
+        },
+        (err) => {
+            switch (err) {
+                case 'J01':
+                    post.errorMessage(message, 'J01', 'A User is not found.');
+                    return;
+                case 'J02':
+                    post.errorMessage(message, 'J02', '');
+                    return;
+                case 'J03':
+                    post.errorMessage(message, 'J03', '');
+                    return;
+                default:
+                    post.errorMessage(message, 'C00', 'Unexpected error code.');
+            }
+        }
+    );
+};
+
+exports.teamAveragepp = teamAveragepp;
+
 async function filterTopPlays (args) { //search beatmaps with specific properties
 
 };

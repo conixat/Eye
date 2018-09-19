@@ -36,6 +36,7 @@ var argsproc = require('./argsproc.js');
 var recv = require('./recv.js');
 var osu = require('./osu.js');
 var commands = require('./commands.js');
+var misc = require('./misc.js');
 
 //===========================================================================
 //config
@@ -172,6 +173,82 @@ client.on('message', (message) =>{
             }
             commands.bestPlaysByMods(message, args.join(' '), Limit, HDSig, FLSig, Details);
             return;
+        case 'team':  // MAKE TEAM ALAISES!!!
+            if (argsproc.noArguments(args)) {
+                post.warningMessage(message, 'I03', 'set\naveragepp');
+                return;
+            }
+            switch (args[0]) {
+                case 'set':
+                    args.shift();
+                    if (argsproc.noArguments(args)) {
+                        post.warningMessage(message, 'I04', 'Please provide a team name.');
+                        return;
+                    }
+                    console.log(args);
+                    args = args.join(' ');
+                    args = args.trim().split(/ *\: */g);
+                    var teamName = args.shift();
+                    console.log(args);
+                    console.log(teamName);
+                    if (argsproc.noArguments(args)) {
+                        post.warningMessage(message, 'I04', 'Please provide at least one member.');
+                        return;
+                    }
+                    args = args.join(' ');
+                    args = args.trim().split(/ *\, */g);
+                    console.log(args);
+                    var teamFile = {"members":[]};
+                    for (let i = 0; i < args.length; i++) {  
+                        teamFile.members.push(args[i]);
+                    }
+                    JSONfunc.write('teams/' + teamName, teamFile);
+                    return;
+                case 'averagepp':
+                    args.shift();
+                    if (argsproc.noArguments(args)) {
+                        post.warningMessage(message, 'I04', 'Please provide a team name.');
+                        return;
+                    }
+                    console.log(args);
+                    args = args.join(' ');
+                    var teamName = args;
+                    console.log(args);
+                    console.log(teamName);
+                    var team = require('./teams/'+teamName+'.json');
+                        if(misc.isEmptyObject(team)){
+                            post.warningMessage(message, 'I04', teamName + 'is not found.');
+                            return;
+                        }
+                    commands.teamAveragepp(message, teamName, team);
+                    return;
+                case 'members':
+                    args.shift();
+                    if (argsproc.noArguments(args)) {
+                        post.warningMessage(message, 'I04', 'Please provide a team name.');
+                    return;
+                    }
+                    console.log(args);
+                    args = args.join(' ');
+                    var teamName = args;
+                    console.log(args);
+                    console.log(teamName);
+                    var team = require('./teams/'+teamName+'.json');
+                        if(misc.isEmptyObject(team)){
+                            post.warningMessage(message, 'I04', teamName + 'is not found.');
+                            return;
+                        }
+                    var resultedString = "";
+                    for(let i = 0; i < team.members.length; i++) {
+                        resultedString += team.members[i] +', ';
+                    }
+                    resultedString = resultedString.slice(0, -2);
+                    post.normalMessage(message, 'Team ' + teamName + '\'s members', resultedString);
+                    return;
+                default:
+                    post.warningMessage(message, 'I03', 'add\naveragepp');
+                    return;
+            }
         default:
             if(!recv.isOwner(message)) { //Non-owner & command validity check
                 post.warningMessage(message, '09', command + ' is not a recognized command or you are not authorized to use it.');
